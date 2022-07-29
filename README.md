@@ -1,10 +1,11 @@
-# OpenShift Console Customizations Plugin
+# OpenShift Console Dynamic Plugin Demo
 
-This project is a simple plugin that adds a Customization nav item to the
-Administrator perspective in OpenShift console. It requires OpenShift 4.10 to
-use.
+This project is a simple plugin we wrote to showcase our struggles with extending Route actions using the `console.action/resource-provider` extension point.
+We have closely mirrored the structure of a static plugin ([console-app](https://github.com/openshift/console/tree/release-4.10/frontend/packages/console-app)) which adds such extension points to Deployments and DeploymentConfigs etc.
 
-## Local development
+Refer to the [console-extensions.json](console-extensions.json)
+
+## Local test
 
 In one terminal window, run:
 
@@ -14,41 +15,14 @@ In one terminal window, run:
 In another terminal window, run:
 
 1. `oc login`
-2. `yarn run start-console` (requires [Docker](https://www.docker.com) or [podman](https://podman.io))
+2. `yarn run start-console`
 
 This will run the OpenShift console in a container connected to the cluster
 you've logged into. The plugin HTTP server runs on port 9001 with CORS enabled.
 Navigate to <http://localhost:9000/customization> to see the running plugin.
 
-## Deployment on cluster
+## Unexpected behavior
 
-You can deploy the plugin to a cluster by applying `manifest.yaml`.
+If you run this demo you will see an additional action appears for DeploymentConfigs [screenshot](deploymentconfig-actions.png) but not for routes [screenshot](route-actions.png).
 
-```sh
-oc apply -f manifest.yaml
-```
-
-Once deployed, patch the
-[Console operator](https://github.com/openshift/console-operator)
-config to enable the plugin.
-
-```sh
-oc patch consoles.operator.openshift.io cluster --patch '{ "spec": { "plugins": ["console-customization"] } }' --type=merge
-```
-
-## Docker image
-
-1. Build the image:
-   ```sh
-   docker build -t quay.io/$USER/console-customization-plugin:latest .
-   ```
-2. Run the image:
-   ```sh
-   docker run -it --rm -d -p 9001:80 quay.io/$USER/console-customization-plugin:latest
-   ```
-3. Push the image to image registry:
-   ```sh
-   docker push quay.io/$USER/console-customization-plugin:latest
-   ```
-
-Update and apply `manifest.yaml` to use a custom plugin image.
+We do understand that for OpenShift 4.10 dynamic console plugins have tech preview maturity. However we are still curious to hear whether there is something we are missing as to why routes wouldn't be supported as a target of the `console.action/resource-provider` extension point or whether dynamic plugins are just not there yet implementation wise.

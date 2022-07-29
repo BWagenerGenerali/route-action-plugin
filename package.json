@@ -1,13 +1,12 @@
 {
-  "name": "console-customization-plugin",
+  "name": "route-action-plugin",
   "version": "0.0.1",
   "private": true,
-  "repository": "git@github.com:spadgett/console-customization-plugin.git",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn clean && NODE_ENV=production yarn ts-node node_modules/.bin/webpack",
-    "build-dev": "yarn clean && yarn ts-node node_modules/.bin/webpack",
-    "start": "yarn ts-node node_modules/.bin/webpack serve",
+    "build": "yarn clean && NODE_ENV=production yarn ts-node node_modules/webpack/bin/webpack.js",
+    "build-dev": "yarn clean && yarn ts-node node_modules/webpack/bin/webpack.js",
+    "start": "yarn ts-node node_modules/webpack/bin/webpack.js serve",
     "start-console": "./start-console.sh",
     "i18n": "i18next \"src/**/*.{js,jsx,ts,tsx}\" [-oc] -c i18next-parser.config.js",
     "ts-node": "ts-node -O '{\"module\":\"commonjs\"}'",
@@ -16,6 +15,8 @@
   "devDependencies": {
     "@openshift-console/dynamic-plugin-sdk": "0.0.3",
     "@openshift-console/dynamic-plugin-sdk-webpack": "0.0.6",
+    "@openshift-console/dynamic-plugin-sdk-internal": "^0.0.10",
+    "@openshift-console/plugin-shared": "^0.0.1",
     "@patternfly/react-core": "4.162.2",
     "@types/node": "^16.11.6",
     "@types/react": "^17.0.34",
@@ -46,17 +47,17 @@
     "webpack-dev-server": "^4.5.0"
   },
   "consolePlugin": {
-    "name": "console-customization",
+    "name": "route-action",
     "version": "0.0.1",
     "displayName": "OpenShift Console Customization Plugin",
     "description": "Allows you to work with ConsoleLink and other customization resources.",
     "exposedModules": {
-      "CustomizationList": "./components/CustomizationList",
-      "CreateConsoleLinkPage": "./components/forms/CreateConsoleLinkPage",
-      "CreateConsoleNotificationPage": "./components/forms/CreateConsoleNotificationPage"
+      "actions": "./actions"
     },
     "dependencies": {
       "@console/pluginAPI": "*"
     }
+  },
+  "dependencies": {
   }
 }

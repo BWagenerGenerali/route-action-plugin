@@ -1,53 +1,24 @@
 [
   {
-    "type": "console.flag/model",
-    "properties": {
-      "flag": "CONSOLE_CUSTOMIZATIONS",
-      "model": {
-        "group": "console.openshift.io",
-        "version": "v1",
-        "kind": "ConsoleLink"
-      }
-    }
-  },
-  {
-    "type": "console.page/route",
-    "properties": {
-      "exact": true,
-      "path": "/customization",
-      "component": { "$codeRef": "CustomizationList" }
-    }
-  },
-  {
-    "type": "console.navigation/href",
-    "properties": {
-      "id": "customization",
-      "name": "Customization",
-      "href": "/customization",
-      "perspective": "admin",
-      "section": "administration"
-    }
-  },
-  {
-    "type": "console.resource/create",
+    "type": "console.action/resource-provider",
     "properties": {
       "model": {
-        "group": "console.openshift.io",
+        "group": "route.openshift.io",
         "version": "v1",
-        "kind": "ConsoleLink"
+        "kind": "Route"
       },
-      "component": { "$codeRef": "CreateConsoleLinkPage" }
+      "provider": { "$codeRef": "actions.useRouteActionsProvider" }
     }
   },
   {
-    "type": "console.resource/create",
+    "type": "console.action/resource-provider",
     "properties": {
       "model": {
-        "group": "console.openshift.io",
+        "group": "apps.openshift.io",
         "version": "v1",
-        "kind": "ConsoleNotification"
+        "kind": "DeploymentConfig"
       },
-      "component": { "$codeRef": "CreateConsoleNotificationPage" }
+      "provider": { "$codeRef": "actions.useRouteActionsProvider" }
     }
   }
 ]
